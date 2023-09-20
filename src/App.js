@@ -59,7 +59,91 @@ function App() {
                     "circle-color": "#3887be"
                 }
             });
-            // this is where the code from the next step will go
+
+            // adding endpoint to map
+            const end = {
+                type: "FeatureCollection",
+                features: [
+                    {
+                        type: "Feature",
+                        properties: {},
+                        geometry: {
+                            type: "Point",
+                            coordinates: [-84.511987, 39.102638]
+                        }
+                    }
+                ]
+            };
+            if (map.current.getLayer("end")) {
+                map.current.getSource("end").setData(end);
+            } else {
+                map.current.addLayer({
+                    id: "end",
+                    type: "circle",
+                    source: {
+                        type: "geojson",
+                        data: {
+                            type: "FeatureCollection",
+                            features: [
+                                {
+                                    type: "Feature",
+                                    properties: {},
+                                    geometry: {
+                                        type: "Point",
+                                        coordinates: [-84.511987, 39.102638]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    paint: {
+                        "circle-radius": 10,
+                        "circle-color": "#f30"
+                    }
+                });
+            }
+
+            const waypoint = {
+                type: "FeatureCollection",
+                features: [
+                    {
+                        type: "Feature",
+                        properties: {},
+                        geometry: {
+                            type: "Point",
+                            coordinates: [-84.510287, 39.10356]
+                        }
+                    }
+                ]
+            };
+            if (map.current.getLayer("waypoint")) {
+                map.current.getSource("waypoint").setData(waypoint);
+            } else {
+                map.current.addLayer({
+                    id: "waypoint",
+                    type: "circle",
+                    source: {
+                        type: "geojson",
+                        data: {
+                            type: "FeatureCollection",
+                            features: [
+                                {
+                                    type: "Feature",
+                                    properties: {},
+                                    geometry: {
+                                        type: "Point",
+                                        coordinates: [-84.510287, 39.10356]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    paint: {
+                        "circle-radius": 10,
+                        "circle-color": "#98fb98"
+                    }
+                });
+            }
         });
         // console.log(getRoute());
     }, []);
@@ -74,6 +158,10 @@ function App() {
                 {
                     location: [-84.511987, 39.102638],
                     name: "East 6th Street"
+                },
+                {
+                    location: [-84.510287, 39.10356],
+                    name: ""
                 }
             ],
             routes: [
