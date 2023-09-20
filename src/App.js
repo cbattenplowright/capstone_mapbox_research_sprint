@@ -9,8 +9,8 @@ mapboxgl.accessToken =
 function App() {
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [lng, setLng] = useState(-122.662323);
-    const [lat, setLat] = useState(45.523751);
+    const [lng, setLng] = useState(-84.518399);
+    const [lat, setLat] = useState(39.134126);
     const [zoom, setZoom] = useState(9);
     const bounds = [
         [-123.069003, 45.395273],
@@ -24,8 +24,8 @@ function App() {
             container: mapContainer.current,
             style: "mapbox://styles/mapbox/streets-v12",
             center: [lng, lat],
-            zoom: zoom,
-            maxBounds: bounds
+            zoom: zoom
+            // maxBounds: bounds
         });
         map.current.on("move", () => {
             setLng(map.current.getCenter().lng.toFixed(4));
@@ -48,7 +48,7 @@ function App() {
                                 properties: {},
                                 geometry: {
                                     type: "Point",
-                                    coordinates: start
+                                    coordinates: [-84.518399, 39.134126]
                                 }
                             }
                         ]
@@ -152,7 +152,6 @@ function App() {
             });
         }
         // add turn instructions here at the end
-        return route;
     };
 
     return (
