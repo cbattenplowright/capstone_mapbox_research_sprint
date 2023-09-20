@@ -9,9 +9,13 @@ mapboxgl.accessToken =
 function App() {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
+  const [lng, setLng] = useState(-122.662323);
+  const [lat, setLat] = useState(45.523751);
   const [zoom, setZoom] = useState(9);
+  const bounds = [
+    [-123.069003, 45.395273],
+    [-122.303707, 45.612333],
+  ];
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -20,6 +24,7 @@ function App() {
       style: "mapbox://styles/mapbox/streets-v12",
       center: [lng, lat],
       zoom: zoom,
+      maxBounds: bounds,
     });
     map.current.on("move", () => {
       setLng(map.current.getCenter().lng.toFixed(4));
