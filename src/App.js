@@ -32,7 +32,36 @@ function App() {
             setLat(map.current.getCenter().lat.toFixed(4));
             setZoom(map.current.getZoom().toFixed(2));
         });
-        console.log(getRoute());
+        map.current.on("load", () => {
+            getRoute(start);
+            // Add starting point to the map
+            map.current.addLayer({
+                id: "point",
+                type: "circle",
+                source: {
+                    type: "geojson",
+                    data: {
+                        type: "FeatureCollection",
+                        features: [
+                            {
+                                type: "Feature",
+                                properties: {},
+                                geometry: {
+                                    type: "Point",
+                                    coordinates: start
+                                }
+                            }
+                        ]
+                    }
+                },
+                paint: {
+                    "circle-radius": 10,
+                    "circle-color": "#3887be"
+                }
+            });
+            // this is where the code from the next step will go
+        });
+        // console.log(getRoute());
     }, []);
 
     const getRoute = () => {
@@ -90,6 +119,39 @@ function App() {
             code: "Ok"
         };
         const route = data.routes[0].geometry.coordinates;
+        const geojson = {
+            type: "Feature",
+            properties: {},
+            geometry: {
+                type: "LineString",
+                coordinates: route
+            }
+        };
+        // if the route already exists on the map, we'll reset it using setData
+        if (map.current.getSource("route")) {
+            map.current.getSource("route").setData(geojson);
+        }
+        // otherwise, we'll make a new request
+        else {
+            map.current.addLayer({
+                id: "route",
+                type: "line",
+                source: {
+                    type: "geojson",
+                    data: geojson
+                },
+                layout: {
+                    "line-join": "round",
+                    "line-cap": "round"
+                },
+                paint: {
+                    "line-color": "#3887be",
+                    "line-width": 5,
+                    "line-opacity": 0.75
+                }
+            });
+        }
+        // add turn instructions here at the end
         return route;
     };
 
