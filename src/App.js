@@ -1,13 +1,9 @@
 import "./App.css";
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
-require("dotenv").config();
-
-console.log(process.env);
-
-mapboxgl.accessToken = process.env.REACT_APP_API_KEY;
 
 function App() {
+  mapboxgl.accessToken = process.env.REACT_APP_API_KEY;
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(-84.518399);
